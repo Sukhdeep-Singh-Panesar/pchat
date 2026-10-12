@@ -1,3 +1,4 @@
+import { jest } from '@jest/globals';
 import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from '../prisma/prisma.service';
 import { UsersService } from './users.service';
@@ -6,8 +7,12 @@ describe('UsersService', () => {
   let service: UsersService;
   let prisma: {
     user: {
-      create: jest.Mock;
-      findMany: jest.Mock;
+      create: jest.Mock<
+        (input: {
+          data: { username: string; email: string };
+        }) => Promise<unknown>
+      >;
+      findMany: jest.Mock<() => Promise<unknown>>;
     };
   };
 
